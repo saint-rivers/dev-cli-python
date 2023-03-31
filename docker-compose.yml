@@ -1,0 +1,13 @@
+version: "3.8"
+
+services: 
+  sample-service:
+    image: postgres:14.4-alpine
+    container_name: myservice
+    environment: 
+      - POSTGRES_DB=default
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+
+
