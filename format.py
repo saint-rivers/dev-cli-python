@@ -3,6 +3,7 @@ service_string = '''
     image: **image**:**version**
     container_name: **container-name**
     environment: **environment**
+    ports: **ports**
 '''
 
 dockerfile_build_string = '''
@@ -12,6 +13,7 @@ dockerfile_build_string = '''
       dockerfile: **dockerfile**
     container_name: **container-name**
     environment: **environment**
+    ports: **ports**
 '''
 
 compose_string = '''version: **version**

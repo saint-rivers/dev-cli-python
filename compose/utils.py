@@ -1,14 +1,16 @@
 from file import write_to_compose_file
-from model import ComposeFile
+from compose import ComposeFile
+from services import Service
+from mapper import mapper
 
 
-def combine_services(services):
+def combine_services(services: list[Service]):
     if (len(services) <= 0):
         return ""
     services_as_string = ""
     for s in services:
-        service_string = s.to_string()
-        services_as_string = f"{services_as_string}{service_string}\n\n"
+        service_string = mapper.map_service(s)
+        services_as_string = f"{services_as_string}{service_string}"
     return services_as_string
 
 

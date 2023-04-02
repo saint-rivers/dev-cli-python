@@ -1,8 +1,8 @@
-# import typer
 import services.database as database
 from compose import init
 import typer
-from model import ComposeFile
+from compose.models import ComposeFile
+
 
 app = typer.Typer()
 
@@ -11,7 +11,9 @@ app = typer.Typer()
 def compose(command: str):
     service = database.postgres()
     switch = {
-        'init': init(ComposeFile(services=[service])),
+        'init': init(ComposeFile(services=[
+            database.mongodb(), database.postgres(),
+        ])),
     }
     return switch.get(command, "invalid input")
 

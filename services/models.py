@@ -1,5 +1,4 @@
-from format import compose_string, compose_full_string, service_string
-from mapper import map_dict_to_string
+import format as format
 
 
 class EnvironmentVariables:
@@ -10,10 +9,19 @@ class EnvironmentVariables:
             self.values[k] = v
 
 
+class PortMapping:
+    host_port = ""
+    container_port = ""
+
+    def __init__(self, host_port: str, container_port: str):
+        self.host_port = host_port
+        self.container_port = container_port
+
+
 class Formattable:
     name = "sample-service"
     container_name = "sample-service"
-    environment_variables: EnvironmentVariables = None
+    env: EnvironmentVariables = None
     ports = []
 
     def __init__(self,
@@ -24,11 +32,8 @@ class Formattable:
                  ):
         self.name = name
         self.container_name = container_name
-        self.environment_variables = EnvironmentVariables(variables)
+        self.env = EnvironmentVariables(variables)
         self.ports = ports
-
-    def to_string(self) -> str:
-        pass
 
 
 class Dockerfile(Formattable):
@@ -47,16 +52,6 @@ class Dockerfile(Formattable):
         self.context = context
         self.dockerfile = dockerfile
 
-    def to_string(self) -> str:
-        output = service_string
-        output = output.replace("**service-name**", self.name)
-        output = output.replace("**context**", self.context)
-        output = output.replace("**dockerfile**", self.dockerfile)
-        output = output.replace("**container-name**", self.container_name)
-        output = output.replace(
-            "**environment**", map_dict_to_string(self.environment_variables.values))
-        return output
-
 
 class Service(Formattable):
     name = "sample-service"
@@ -73,25 +68,3 @@ class Service(Formattable):
         super().__init__(name, container_name, variables, ports)
         self.image = image
         self.version = image_version
-
-    def to_string(self) -> str:
-        output = service_string
-        output = output.replace("**service-name**", self.name)
-        output = output.replace("**image**", self.image)
-        output = output.replace("**version**", self.version)
-        output = output.replace("**container-name**", self.container_name)
-        output = output.replace(
-            "**environment**", map_dict_to_string(self.environment_variables.values))
-        return output
-
-
-class ComposeFile:
-    compose_format = compose_string
-    version = ""
-    services = []
-
-    def __init__(self, version: str = "3.8", services=[]):
-        self.version = version
-        self.services = services
-        if (services != []):
-            self.compose_format = compose_full_string

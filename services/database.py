@@ -1,4 +1,5 @@
-from model import Service
+from services.models import Service
+from services import PortMapping
 
 
 def postgres():
@@ -6,9 +7,12 @@ def postgres():
         image="postgres",
         image_version="14.4-alpine",
         variables={'POSTGRES_DB': 'default',
-                   'MONGO_INITDB_ROOT_PASSWORD': 'postgres', 'POSTGRES_PASSWORD': 'password'},
+                   'POSTGRES_USER': 'postgres',
+                   'POSTGRES_PASSWORD': 'password'
+                   },
         container_name="postgres-db",
-        name="postgres-db"
+        name="postgres-db",
+        ports=[PortMapping("5432", "5432")]
     )
 
 
@@ -20,5 +24,6 @@ def mongodb():
                    'MONGO_INITDB_ROOT_PASSWORD': 'mongo'
                    },
         container_name="mongodb",
-        name="mongodb"
+        name="mongodb",
+        ports=[PortMapping("27017", "27017")]
     )
