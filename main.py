@@ -1,22 +1,15 @@
 # import typer
+import services.database as database
 from compose import init
 import typer
-from model import ComposeFile, Service
+from model import ComposeFile
 
 app = typer.Typer()
 
 
 @app.command()
 def compose(command: str):
-    service = Service(
-        variables={'POSTGRES_DB': 'default',
-                   'POSTGRES_USER': 'postgres',
-                   'POSTGRES_PASSWORD': 'password'
-                   },
-        container_name="myservice",
-        image="postgres",
-        image_version="14.4-alpine"
-    )
+    service = database.postgres()
     switch = {
         'init': init(ComposeFile(services=[service])),
     }
@@ -26,13 +19,8 @@ def compose(command: str):
 @app.command()
 def service(service_type: str):
     switch = {
-        'postgres': Service(
-            variables={'POSTGRES_DB': 'default',
-                       'POSTGRES_USER': 'postgres', 'POSTGRES_PASSWORD': 'password'},
-            container_name="myservice",
-            image="postgres",
-            image_version="14.4-alpine"
-        )
+        'postgres': database.postgres(),
+        'mongodb': database.mongodb()
     }
     return switch.get(service_type, "service not provided")
 

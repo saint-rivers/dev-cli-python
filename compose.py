@@ -7,7 +7,8 @@ def combine_services(services):
         return ""
     services_as_string = ""
     for s in services:
-        services_as_string = f"{services_as_string}{s.to_string()}\n\n"
+        service_string = s.to_string()
+        services_as_string = f"{services_as_string}{service_string}\n\n"
     return services_as_string
 
 
@@ -17,6 +18,7 @@ def init(compose: ComposeFile):
 
     services_as_string = combine_services(compose.services)
     new_file = new_file.replace("**services**", services_as_string)
+
     write_to_compose_file(new_file)
 
     print("CREATED docker-compose.yml in the current directory")
