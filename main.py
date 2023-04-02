@@ -2,6 +2,7 @@ import services.database as database
 from compose import init
 import typer
 from compose.models import ComposeFile
+from mapper import mapper
 
 
 app = typer.Typer()
@@ -26,7 +27,10 @@ def service(service_type: str):
         'postgres': database.postgres(),
         'mongodb': database.mongodb()
     }
-    return switch.get(service_type, "service not provided")
+    service = switch.get(service_type, "service not provided")
+    output = mapper.map_service(service)
+    print(output)
+    return 
 
 
 app()
