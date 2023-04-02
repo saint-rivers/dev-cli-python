@@ -18,6 +18,7 @@ def init(compose: ComposeFile):
     new_file = compose.compose_format
     new_file = new_file.replace("**version**", compose.version)
 
+    # print(compose.services)
     services_as_string = combine_services(compose.services)
     new_file = new_file.replace("**services**", services_as_string)
 

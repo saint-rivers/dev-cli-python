@@ -18,11 +18,12 @@ def map_ports(ports=list[PortMapping]):
 
 
 def map_base_service(output: str, service: Formattable) -> str:
+    # print(service.container_name)
     output = output.replace("**service-name**", service.name)
     output = output.replace("**container-name**", service.container_name)
 
-    if service.env.values != None:
-        mapped_env = map_env(service.env.values)
+    if service.env != {}:
+        mapped_env = map_env(service.env)
         output = output.replace("**environment**", mapped_env)
 
     if service.ports != None:
@@ -45,5 +46,5 @@ def map_service(service: Formattable) -> str:
     else:
         print("invalid service type found")
 
-    output = map_base_service(output, service)
+    output = map_base_service(output=output, service=service)
     return output

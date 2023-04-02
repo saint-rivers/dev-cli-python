@@ -21,18 +21,18 @@ class PortMapping:
 class Formattable:
     name = "sample-service"
     container_name = "sample-service"
-    env: EnvironmentVariables = None
-    ports = []
+    env: dict[str, str] = None
+    ports = list[PortMapping]
 
     def __init__(self,
+                 variables: dict[str, str] = {},
                  name: str = "sample-service",
                  container_name: str = "sample-service",
-                 variables={},
-                 ports=[]
+                 ports: list[PortMapping] = []
                  ):
         self.name = name
         self.container_name = container_name
-        self.env = EnvironmentVariables(variables)
+        self.env = variables
         self.ports = ports
 
 
@@ -43,12 +43,16 @@ class Dockerfile(Formattable):
     def __init__(self,
                  context: str = ".",
                  dockerfile: str = "Dockerfile",
-                 variables={},
+                 variables: dict[str, str] = {},
                  name: str = "sample-service",
                  container_name: str = "sample-service",
-                 ports=[]
+                 ports: list[PortMapping] = []
                  ):
-        super().__init__(name, container_name, variables, ports)
+        super().__init__(name=name,
+                         container_name=container_name,
+                         variables=variables,
+                         ports=ports
+                         )
         self.context = context
         self.dockerfile = dockerfile
 
@@ -60,11 +64,15 @@ class Service(Formattable):
     def __init__(self,
                  image: str,
                  image_version: str,
-                 variables={},
+                 variables: dict[str, str] = {},
                  name: str = "sample-service",
                  container_name: str = "sample-service",
-                 ports=[]
+                 ports: list[PortMapping] = []
                  ):
-        super().__init__(name, container_name, variables, ports)
+        super().__init__(name=name,
+                         container_name=container_name,
+                         variables=variables,
+                         ports=ports
+                         )
         self.image = image
         self.version = image_version

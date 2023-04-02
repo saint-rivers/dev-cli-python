@@ -9,11 +9,13 @@ app = typer.Typer()
 
 @app.command()
 def compose(command: str):
-    service = database.postgres()
+
+    comp = ComposeFile(services=[
+        database.mongodb(), database.postgres(),
+    ])
+
     switch = {
-        'init': init(ComposeFile(services=[
-            database.mongodb(), database.postgres(),
-        ])),
+        'init': init(comp),
     }
     return switch.get(command, "invalid input")
 
