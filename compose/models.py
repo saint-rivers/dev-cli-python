@@ -1,4 +1,4 @@
-from format import compose_string, compose_full_string
+from constants.format import compose_string, compose_full_string
 from services.models import Service
 
 

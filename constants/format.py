@@ -24,3 +24,8 @@ compose_full_string = '''version: "**version**"
 
 services: **services**
 '''
+
+jre_string = '''FROM eclipse-temurin:17-jre-alpine
+ADD build/libs/*.jar /opt/root.jar
+ENTRYPOINT ["java","-jar","/opt/root.jar"]
+'''

@@ -1,4 +1,4 @@
-import format as format
+import constants.format as format
 
 
 class EnvironmentVariables:
@@ -36,7 +36,7 @@ class Formattable:
         self.ports = ports
 
 
-class Dockerfile(Formattable):
+class FromDockerfile(Formattable):
     dockerfile = ""
     context = ""
 
