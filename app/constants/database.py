@@ -1,5 +1,5 @@
-from services.models import Service
-from services import PortMapping
+from app.services.models import Service
+from app.services import PortMapping
 
 
 def postgres():

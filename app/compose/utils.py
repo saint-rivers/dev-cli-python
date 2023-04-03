@@ -1,7 +1,7 @@
-from file import write_to_compose_file
-from compose import ComposeFile
-from services import Service
-from mapper import mapper
+from app.file.file import write_to_compose_file
+from app.compose import ComposeFile
+from app.services import Service
+from app.mapper import mapper
 
 
 def combine_services(services: list[Service]):

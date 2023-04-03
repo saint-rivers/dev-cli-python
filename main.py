@@ -1,10 +1,10 @@
-import constants.database as database
-from compose import init
+import app.constants.database as database
+from app.compose import init
+from app.compose.models import ComposeFile
+from app.mapper import mapper
+from app.services.models import FromDockerfile, PortMapping
+from app.docker import docker_writer as docker
 import typer
-from compose.models import ComposeFile
-from mapper import mapper
-
-from services.models import FromDockerfile, PortMapping
 
 
 app = typer.Typer()
@@ -29,9 +29,7 @@ def compose(command: str):
 
 @app.command()
 def dockerfile(file_type: str):
-    switch = {
-    }
-    return switch.get(file_type, "specified dockerfile not available")
+    docker.write_dockerfile(file_type)
 
 
 @app.command()

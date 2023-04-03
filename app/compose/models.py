@@ -1,5 +1,5 @@
-from constants.format import compose_string, compose_full_string
-from services.models import Service
+from app.constants.format import compose_string, compose_full_string
+from app.services.models import Service
 
 
 class ComposeFile:
