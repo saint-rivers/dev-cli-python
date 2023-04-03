@@ -1,9 +1,11 @@
 import app.constants.database as database
-from app.compose import init
+from app.compose.utils import init
 from app.compose.models import ComposeFile
 from app.mapper import mapper
 from app.services.models import FromDockerfile, PortMapping
 from app.docker import docker_writer as docker
+# from app.
+from app.constants import keycloak
 import typer
 
 
@@ -16,10 +18,11 @@ def compose(command: str):
     # comp = ComposeFile(services=[
     #     database.mongodb(), database.postgres(),
     # ])
-    comp = ComposeFile(services=[
-        FromDockerfile(ports=[PortMapping("8800", "8080"),
-                       PortMapping("8443", "8443")])
-    ])
+    # comp = ComposeFile(services=[
+    #     FromDockerfile(ports=[PortMapping("8800", "8080"),
+    #                    PortMapping("8443", "8443")])
+    # ])
+    comp = keycloak.keycloak_compose
 
     switch = {
         'init': init(comp),
@@ -36,7 +39,8 @@ def dockerfile(file_type: str):
 def service(service_type: str):
     switch = {
         'postgres': database.postgres(),
-        'mongodb': database.mongodb()
+        'mongodb': database.mongodb(),
+        # 'keycloak':
     }
     service = switch.get(service_type, "service not provided")
     output = mapper.map_service(service)

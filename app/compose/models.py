@@ -1,5 +1,5 @@
 from app.constants.format import compose_string, compose_full_string
-from app.services.models import Service
+from app.services.models import Service, Formattable
 
 
 class ComposeFile:
@@ -7,7 +7,7 @@ class ComposeFile:
     version = ""
     services = []
 
-    def __init__(self, version: str = "3.8", services: list[Service] = []):
+    def __init__(self, version: str = "3.8", services: list[Formattable] = []):
         self.version = version
         self.services = services
         if (services != []):
